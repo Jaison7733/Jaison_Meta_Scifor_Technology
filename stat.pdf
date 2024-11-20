@@ -1,0 +1,21 @@
+Descriptive statistics is a branch of statistics that involves summarizing and describing the main features of a collection of data. It provides a simple way to understand the data by giving a summary of the important characteristics.
+
+Key Concepts in Descriptive Statistics
+
+Measures of Central Tendency:
+
+Mean: The average of a dataset, calculated by summing all values and dividing by the number of values.
+Example: If the scores of 5 students are 70, 80, 90, 85, and 95, the mean score is (70+80+90+85+95)/5 = 84.
+  
+Median: The middle value in a dataset when the values are arranged in ascending or descending order.
+Example: For the same dataset, the median score is 85.
+Mode: The most frequently occurring value in a dataset.
+Example: If the scores of 10 students are 70, 80, 80, 85, 90, 90, 90, 95, 95, and 100, the mode is 90.
+Measures of Dispersion:
+
+Range: The difference between the highest and lowest values in a dataset.
+Example: For the scores 70, 80, 90, 85, and 95, the range is 95-70 = 25.
+Variance: A measure of how spread out the data is, calculated by taking the average squared deviation from the mean.
+Example: For the same dataset, the variance is approximately 62.5.
+Standard Deviation: The square root of the variance, providing a measure of dispersion in the same units as the original data.
+Example: For the same dataset, the standard deviation is approximately 7.91.
