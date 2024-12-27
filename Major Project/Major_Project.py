@@ -63,6 +63,7 @@ user_input = {
         'LoanAmount': LoanAmount,
         'Credit_History': Credit_History,
         'Property_Area': Property_Area
+
         }
 
 df = pd.DataFrame([user_input])
@@ -74,7 +75,7 @@ cols=["CoapplicantIncome"]
 df=df.drop(columns=cols,axis=1)
 df.replace({'Married':{'No':0,'Yes':1},'Gender':{'Male':1,'Female':0},'Self_Employed':{'No':0,'Yes':1},
                       'Property_Area':{'Rural':0,'Semiurban':1,'Urban':2},'Education':{'Graduate':1,'Not Graduate':0}},inplace=True)
-
+#button
 if st.button("Enter"):
     prediction = rf_classifier.predict(df)
     if prediction == 1:
