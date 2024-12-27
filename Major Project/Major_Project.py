@@ -80,4 +80,4 @@ if st.button("Enter"):
     if prediction == 1:
         st.success("Loan application is likely to be approved.")
     else:
-        st.warning("Loan application is likely to be rejected.")
+        st.warning("Sorry, Loan application is likely to be rejected.")
