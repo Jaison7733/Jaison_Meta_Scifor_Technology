@@ -8,7 +8,7 @@ from sklearn.metrics import accuracy_score
 from sklearn.ensemble import RandomForestClassifier
 import streamlit as st
 
-uploaded_file = st.file_uploader("Choose a CSV file", type="csv")
+uploaded_file = st.file_uploader("dataset.csv", type="csv")
 loan_dataset = pd.read_csv(uploaded_file)
 loan_dataset=loan_dataset.dropna()
 loan_dataset.replace({"Loan_Status":{"N":0,"Y":1}},inplace=True)
