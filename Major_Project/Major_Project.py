@@ -2,6 +2,7 @@
 import streamlit as st
 import pickle
 import pandas as pd
+import numpy as np
 import os
 
 # Load the model
@@ -43,6 +44,7 @@ df = pd.DataFrame([user_input])
 
 df.replace({'self_employed':{'Yes':1,'No':0},'education':{'Graduate':1,'Not Graduate':0}},inplace=True)
 
+df = df.fillna(np.NAN)
 
 #rf_classifier = pickle.load(open('Model/rfclassifier.pkl', 'rb'))
 
