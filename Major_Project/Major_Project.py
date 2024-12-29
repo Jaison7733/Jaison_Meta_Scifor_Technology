@@ -1,81 +1,46 @@
-import numpy as np
-import pandas as pd
-import seaborn as sns
-import matplotlib.pyplot as plt
-from sklearn.model_selection import train_test_split
-from sklearn import svm
-from sklearn.metrics import accuracy_score
-from sklearn.ensemble import RandomForestClassifier
+
 import streamlit as st
-
-uploaded_file = st.file_uploader("dataset.csv", type="csv")
-loan_dataset = pd.read_csv(uploaded_file)
-loan_dataset=loan_dataset.dropna()
-loan_dataset.replace({"Loan_Status":{"N":0,"Y":1}},inplace=True)
-loan_dataset.replace(to_replace="3+",value=4,inplace=True)
-loan_dataset["Total_Applicant_Income"]=loan_dataset["ApplicantIncome"]+loan_dataset["CoapplicantIncome"]
-#drop unnecessary columns
-cols=["CoapplicantIncome","Loan_Amount_Term"]
-loan_dataset=loan_dataset.drop(columns=cols,axis=1)
-loan_dataset.replace({'Married':{'No':0,'Yes':1},'Gender':{'Male':1,'Female':0},'Self_Employed':{'No':0,'Yes':1},
-                      'Property_Area':{'Rural':0,'Semiurban':1,'Urban':2},'Education':{'Graduate':1,'Not Graduate':0}},inplace=True)
-X = loan_dataset.drop(columns=['Loan_ID','Loan_Status'],axis=1)
-Y = loan_dataset['Loan_Status']
-X_train, X_test,Y_train,Y_test = train_test_split(X,Y,test_size=0.1,stratify=Y,random_state=42)
-# Create a Random Forest Classifier object
-rf_classifier = RandomForestClassifier(n_estimators=40, random_state=42) 
-# Train the model
-rf_classifier.fit(X_train, Y_train)
-# accuracy score on training data
-X_train_prediction = rf_classifier.predict(X_train)
-training_data_accuray = accuracy_score(X_train_prediction,Y_train)
-#print('Accuracy on training data : ', training_data_accuray)
-# accuracy score on training data
-X_test_prediction = rf_classifier.predict(X_test)
-test_data_accuray = accuracy_score(X_test_prediction,Y_test)
-#print('Accuracy on test data : ', test_data_accuray)
-
-
-
+import pickle
+import pandas as pd
 
 st.title("Loan Prediction App")
 
-Gender = st.selectbox("Gender", ["Male", "Female"])
-Married = st.selectbox("Married", ["Yes", "No"])
-Dependents = st.selectbox("Dependents", ["0", "1", "2", "3+"])
+Dependents = st.selectbox("Dependents", ["0", "1", "2", "3", "4", "5"])
 Education = st.selectbox("Education", ["Graduate", "Not Graduate"])
 Self_Employed = st.selectbox("Self_Employed", ["Yes", "No"])
-ApplicantIncome = st.number_input("Applicant Income in $")
-CoapplicantIncome = st.number_input("Coapplicant Income in $")
+ApplicantIncome = st.number_input("Yearly Applicant Income in Rs")
 LoanAmount = st.number_input("Loan Amount")
-Loan_Amount_Term = st.number_input("Loan Amount Term in months", min_value=12, max_value=360)
-Credit_History = st.selectbox("Credit History (Good=1, Bad=0)", ["1", "0"])
-Property_Area = st.selectbox("Property_Area", ["Rural", "Urban", "Semiurban"])
+Loan_Amount_Term = st.number_input("Loan Amount Term in years", min_value=1, max_value=30)
+Cibil_Score = st.number_input("Cibil Score",min_value=200, max_value=1000)
+Residential_Assets_Value=st.number_input("Residential Assets Value")
+Commercial_Assets_Value=st.number_input("Commercial Assets Value")
+Luxury_Assets_Value=st.number_input("Luxury Assets Value")
+Bank_Assets_Value=st.number_input("Bank Assets Value")
 
 user_input = {
-        'Gender': Gender,
-        'Married': Married,
-        'Dependents': Dependents,
-        'Education': Education,
-        'Self_Employed': Self_Employed,
-        'ApplicantIncome': ApplicantIncome,
-        'CoapplicantIncome': CoapplicantIncome,
-        'LoanAmount': LoanAmount,
-        'Credit_History': Credit_History,
-        'Property_Area': Property_Area
+
+        'no_of_dependents': Dependents,
+        'education': Education,
+        'self_employed': Self_Employed,
+        'income_annum': ApplicantIncome,
+        'loan_amount': LoanAmount,
+        'loan_term':Loan_Amount_Term,
+        'cibil_score': Cibil_Score,
+        'residential_assets_value': Residential_Assets_Value,
+        'commercial_assets_value': Commercial_Assets_Value,
+        'luxury_assets_value': Luxury_Assets_Value,
+        'bank_asset_value': Bank_Assets_Value
 
         }
 
 df = pd.DataFrame([user_input])
 
-df.replace(to_replace="3+",value=4,inplace=True)
-df["Total_Applicant_Income"]=df["ApplicantIncome"]+df["CoapplicantIncome"]
-#drop unnecessary columns
-cols=["CoapplicantIncome"]
-df=df.drop(columns=cols,axis=1)
-df.replace({'Married':{'No':0,'Yes':1},'Gender':{'Male':1,'Female':0},'Self_Employed':{'No':0,'Yes':1},
-                      'Property_Area':{'Rural':0,'Semiurban':1,'Urban':2},'Education':{'Graduate':1,'Not Graduate':0}},inplace=True)
-#button
+df.replace({'self_employed':{'Yes':1,'No':0},'education':{'Graduate':1,'Not Graduate':0}},inplace=True)
+
+with open('rfclassifier.pkl','rb') as file:
+  rf_classifier = pickle.load(file)
+
+
 if st.button("Enter"):
     prediction = rf_classifier.predict(df)
     if prediction == 1:
