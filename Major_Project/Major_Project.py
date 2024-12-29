@@ -46,7 +46,7 @@ df.replace({'self_employed':{'Yes':1,'No':0},'education':{'Graduate':1,'Not Grad
 #df = df.astype(np.int64)
 Major_Project/rfclassifier.pkl
 
-rf_classifier = pickle.load(open('Major_Project/rfclassifier.pkl', 'rb'))
+rf_classifier = pickle.load(open('rfclassifier.pkl', 'rb'))
 
 #Major_Project/Model/rfclassifier.pkl
 
