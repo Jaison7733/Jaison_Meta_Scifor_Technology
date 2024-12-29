@@ -38,7 +38,7 @@ df = pd.DataFrame([user_input])
 df.replace({'self_employed':{'Yes':1,'No':0},'education':{'Graduate':1,'Not Graduate':0}},inplace=True)
 
 
-rf_classifier = pickle.load(open('./Model/rfclassifier.pkl', 'rb'))
+rf_classifier = pickle.load(open('../Model/rfclassifier.pkl', 'rb'))
 
 
 
