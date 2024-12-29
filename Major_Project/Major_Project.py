@@ -6,9 +6,9 @@ import numpy as np
 import os
 
 # Load the model
-model_path = os.path.join(os.path.dirname(__file__), 'Model', 'rfclassifier.pkl') 
-with open(model_path, 'rb') as f:
-    rf_classifier = pickle.load(f)
+#model_path = os.path.join(os.path.dirname(__file__), 'Model', 'rfclassifier.pkl') 
+#with open(model_path, 'rb') as f:
+#    rf_classifier = pickle.load(f)
 
 st.title("Loan Prediction App")
 
@@ -46,9 +46,9 @@ df.replace({'self_employed':{'Yes':1,'No':0},'education':{'Graduate':1,'Not Grad
 df = df.astype(np.int64)
 
 
-#rf_classifier = pickle.load(open('Model/rfclassifier.pkl', 'rb'))
+rf_classifier = pickle.load(open('Major_Project/Model/rfclassifier.pkl', 'rb'))
 
-
+Major_Project/Model/rfclassifier.pkl
 
 if st.button("Enter"):
     prediction = rf_classifier.predict(df)
