@@ -26,7 +26,7 @@ Bank_Assets_Value=st.number_input("Bank Assets Value")
 
 user_input = {
 
-        'no_of_dependents': Dependents,
+        'no_of_dependents': int64(Dependents),
         'education': Education,
         'self_employed': Self_Employed,
         'income_annum': ApplicantIncome,
@@ -44,7 +44,7 @@ df = pd.DataFrame([user_input])
 
 df.replace({'self_employed':{'Yes':1,'No':0},'education':{'Graduate':1,'Not Graduate':0}},inplace=True)
 
-df = df.fillna(np.NAN)
+
 
 #rf_classifier = pickle.load(open('Model/rfclassifier.pkl', 'rb'))
 
