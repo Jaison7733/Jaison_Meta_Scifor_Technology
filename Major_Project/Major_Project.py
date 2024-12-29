@@ -46,7 +46,7 @@ df.replace({'self_employed':{'Yes':1,'No':0},'education':{'Graduate':1,'Not Grad
 #df = df.astype(np.int64)
 
 
-rf_classifier = pickle.load(open('https://github.com/Jaison7733/Jaison_Meta_Scifor_Technology/blob/56b45c2e3b6bb6fb35edd3b5976243de3b26fb4b/Major_Project/rfclassifier.pkl', 'rb'))
+rf_classifier = pickle.load(open('/workspaces/Jaison_Meta_Scifor_Technology/Major_Project/rfclassifier.pkl', 'rb'))
 
 #Major_Project/Model/rfclassifier.pkl
 
