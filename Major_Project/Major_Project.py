@@ -1,13 +1,37 @@
-
 import streamlit as st
 import pandas as pd
 import numpy as np
-import os
+from sklearn.model_selection import train_test_split
+from sklearn.model_selection import cross_val_score
+from sklearn.metrics import accuracy_score, confusion_matrix
+from sklearn.ensemble import RandomForestClassifier
 
-# Load the model
-#model_path = os.path.join(os.path.dirname(__file__), 'Model', 'rfclassifier.pkl') 
-#with open(model_path, 'rb') as f:
-#    rf_classifier = pickle.load(f)
+url='https://drive.google.com/file/d/1TXr7b8FuZ4qb1fagnzXVwUYT9odrXk53/view?usp=drive_link'
+file_id=url.split('/')[-2]
+dwn_url='https://drive.google.com/uc?id=' + file_id
+dataset = pd.read_csv(dwn_url)
+
+dataset.replace({'loan_status':{'Rejected':0,'Approved':1}},inplace=True)
+dataset.replace({'loan_status':{'Rejected':0,'Approved':1},'self_employed':{'Yes':1,'No':0},'education':{'Graduate':1,'Not Graduate':0}},inplace=True)
+
+X = dataset.drop(columns=['loan_id','loan_status'],axis=1)
+Y = dataset['loan_status']
+
+X_train, X_test,Y_train,Y_test = train_test_split(X,Y,test_size=0.25,stratify=Y,random_state=42)
+
+best_model2 = RandomForestClassifier(
+                                    max_depth=20, 
+                                    min_samples_leaf=1, 
+                                    min_samples_split=2, 
+                                    n_estimators=100
+                                    )
+best_model2.fit(X_train,Y_train)
+Y_pred_best_model2 = best_model2.predict(X_test)
+accuracy = accuracy_score(Y_test,Y_pred_best_model2)
+#print("Accuracy score of Best_Model 2 Random Forest: ", accuracy*100)
+score = cross_val_score(best_model2,X,Y,cv=4)
+#print("Cross Validation score of Best_Model 2 Random Forest: ",np.mean(score)*100)
+
 
 st.title("Loan Prediction App")
 
@@ -42,8 +66,7 @@ user_input = {
 df = pd.DataFrame([user_input])
 
 df.replace({'self_employed':{'Yes':1,'No':0},'education':{'Graduate':1,'Not Graduate':0}},inplace=True)
-#df = df.astype(np.int64)
-Major_Project/rfclassifier.pkl
+
 
 
 st.write(f"Model accuracy (mean across 4 folds): {np.mean(score)*100:.2f}%")
