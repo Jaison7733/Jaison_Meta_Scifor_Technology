@@ -43,12 +43,12 @@ user_input = {
 df = pd.DataFrame([user_input])
 
 df.replace({'self_employed':{'Yes':1,'No':0},'education':{'Graduate':1,'Not Graduate':0}},inplace=True)
-df = df.astype(np.int64)
+#df = df.astype(np.int64)
 
 
 rf_classifier = pickle.load(open('Major_Project/Model/rfclassifier.pkl', 'rb'))
 
-Major_Project/Model/rfclassifier.pkl
+#Major_Project/Model/rfclassifier.pkl
 
 if st.button("Enter"):
     prediction = rf_classifier.predict(df)
